@@ -30,8 +30,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            Log.d(TAG, "doInBackground: start with "+strings[0]); // here also logd and and stting in message
-            return "Downloadingbackground completed.";
+            Log.d(TAG, "doInBackground: start with "+strings[0]);
+            // here also logd and and stting in message
+            String rssFeed = DownloadXML(strings[0]);
+            if(rssFeed == null){
+                Log.e(TAG, "doInBackground: Downloading");
+            }
+
+            return rssFeed;
         }
     }
 }

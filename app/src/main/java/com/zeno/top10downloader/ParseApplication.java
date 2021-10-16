@@ -1,5 +1,7 @@
 package com.zeno.top10downloader;
 
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -22,7 +24,7 @@ public class ParseApplication {
 
     public boolean parse(String xmlData) {
         boolean status = true;
-        Feedentry currentRecords;
+        Feedentry currentRecords = null;
         boolean inEntry = false;
         String textValue = "";
 
@@ -35,6 +37,46 @@ public class ParseApplication {
             //passing value that we get from the parameter of the function
             int eventType = xpp.getEventType(); // intilazing int veriable to check weither geven XML is completed or not
             while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tagname = xpp.getName();
+                switch (eventType){
+                    case XmlPullParser.START_TAG:
+                        Log.d(TAG, "parse: Starting tag for "+tagname);
+                        if("entry".equalsIgnoreCase(tagname)) {
+                            inEntry = true;
+                            currentRecords = new Feedentry(); //initalizing Feedentry object here
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        textValue = xpp.getText();
+                        break;
+                    case XmlPullParser.END_TAG:
+                        Log.d(TAG, "parse: Ending tag for"+tagname);
+                        if(inEntry){
+
+                                if("entry".equalsIgnoreCase(tagname)) {
+                                    applications.add(currentRecords);   // adding object in the applications array list
+                                    inEntry = false;
+                                }else if("name".equalsIgnoreCase(tagname)) { //setting values for the variables preseant in the Feedentry class
+                                        currentRecords.setName(textValue);
+
+                                }else if("artist".equalsIgnoreCase(tagname)) {
+                                       currentRecords.setAuthor_and_singer(textValue);
+
+                                }else if("image".equalsIgnoreCase(tagname)){
+                                       currentRecords.setImage_url(textValue);
+
+                                }else if("releasedate".equalsIgnoreCase(tagname)){
+                                        currentRecords.setRealse_date(textValue);
+                                }else if("category".equalsIgnoreCase(tagname)){
+                                        currentRecords.setCategory(textValue);
+                                }
+                        }
+                                break;
+                    default:
+                        // nothing to de here lol
+
+                }
+
 
             }
         } catch (Exception e) {

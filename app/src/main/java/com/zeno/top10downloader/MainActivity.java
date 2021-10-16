@@ -1,14 +1,13 @@
 package com.zeno.top10downloader;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: starting Asynctask ");
         DownloadData downloadData = new DownloadData();  // creating object of Downloaddata class 
-        downloadData.execute("Url goes here"); //using inbuilt command exucate to from AyncTask class
+        downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=25/xml"); //using inbuilt command exucate to from AyncTask class
         Log.d(TAG, "onCreate: done");
 
     }
@@ -95,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "DownloadXML: invalid URL " + e.getMessage());
             } catch (IOException e) {
                 Log.e(TAG, "DownloadXML: IO expection while reading the data " + e.getMessage());
+            } catch (SecurityException e){
+                Log.e(TAG, "DownloadXML: Need permisson please"+ e.getMessage());
+                e.printStackTrace();
             }
             return  null;
 

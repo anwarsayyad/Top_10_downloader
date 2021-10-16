@@ -2,7 +2,7 @@ package com.zeno.top10downloader;
 
 public class Feedentry {
     private String name;
-    private String category;
+
     private String realse_date;
     private String Author_and_singer;
 
@@ -20,9 +20,7 @@ public class Feedentry {
         this.name = name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+
 
     public void setRealse_date(String realse_date) {
         this.realse_date = realse_date;
@@ -44,14 +42,11 @@ public class Feedentry {
         return Author_and_singer;
     }
 
-    public String getCategory() {
-        return category;
-    }
+
 
     @Override
     public String toString() {
         return "name=" + name + '\n' +
-                "category=" + category + '\n' +
                 "realse_date=" + realse_date + '\n' +
                 "Author_and_singer=" + Author_and_singer + '\n' +
                 "Image_url=" + Image_url + '\n' ;

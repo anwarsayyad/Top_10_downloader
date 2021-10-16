@@ -3,6 +3,8 @@ package com.zeno.top10downloader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,11 +17,15 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity"; //just type logt to get this and add class name
+    private ListView listApps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listApps = (ListView) findViewById(R.id.XmlList);
+
+
         Log.d(TAG, "onCreate: starting Asynctask ");
         DownloadData downloadData = new DownloadData();  // creating object of Downloaddata class 
         downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=25/xml"); //using inbuilt command exucate to from AyncTask class
@@ -34,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             Log.d(TAG, "onPostExecute: Peramerte is " + s); // but here logd
             super.onPostExecute(s);
+            ParseApplication parseApplication = new ParseApplication();
+            parseApplication.parse(s);
+
+            ArrayAdapter<Feedentry> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.list_item, parseApplication.getApplications());
+            listApps.setAdapter(arrayAdapter);
         }
 
         @Override
@@ -94,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "DownloadXML: invalid URL " + e.getMessage());
             } catch (IOException e) {
                 Log.e(TAG, "DownloadXML: IO expection while reading the data " + e.getMessage());
-            } catch (SecurityException e){
-                Log.e(TAG, "DownloadXML: Need permisson please"+ e.getMessage());
+            } catch (SecurityException e) {
+                Log.e(TAG, "DownloadXML: Need permisson please" + e.getMessage());
                 e.printStackTrace();
             }
-            return  null;
+            return null;
 
         }
 

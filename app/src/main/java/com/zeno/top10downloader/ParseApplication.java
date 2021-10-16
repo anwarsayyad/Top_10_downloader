@@ -67,8 +67,6 @@ public class ParseApplication {
 
                                 }else if("releasedate".equalsIgnoreCase(tagname)){
                                         currentRecords.setRealse_date(textValue);
-                                }else if("category".equalsIgnoreCase(tagname)){
-                                        currentRecords.setCategory(textValue);
                                 }
                         }
                                 break;
@@ -76,8 +74,13 @@ public class ParseApplication {
                         // nothing to de here lol
 
                 }
+                eventType = xpp.next();
 
 
+            }
+            for (Feedentry app: applications){
+                Log.d(TAG, "parse: ******************************");
+                Log.d(TAG,app.toString());
             }
         } catch (Exception e) {
             status = false;

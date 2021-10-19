@@ -5,6 +5,15 @@ public class Feedentry {
 
     private String realse_date;
     private String Author_and_singer;
+    private String cost;
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
 
     public String getImage_url() {
         return Image_url;
@@ -49,6 +58,7 @@ public class Feedentry {
         return "name=" + name + '\n' +
                 "realse_date=" + realse_date + '\n' +
                 "Author_and_singer=" + Author_and_singer + '\n' +
-                "Image_url=" + Image_url + '\n' ;
+                "Image_url=" + Image_url + '\n' +
+                "Cost " + cost ;
     }
 }

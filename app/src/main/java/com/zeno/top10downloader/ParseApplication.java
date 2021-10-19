@@ -67,6 +67,8 @@ public class ParseApplication {
 
                                 }else if("releasedate".equalsIgnoreCase(tagname)){
                                         currentRecords.setRealse_date(textValue);
+                                }else if("price".equalsIgnoreCase(tagname)){
+                                        currentRecords.setCost(textValue);
                                 }
                         }
                                 break;

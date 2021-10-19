@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: starting Asynctask ");
         DownloadData downloadData = new DownloadData();  // creating object of Downloaddata class 
-        downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=25/xml"); //using inbuilt command exucate to from AyncTask class
+        downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=100/xml"); //using inbuilt command exucate to from AyncTask class
         Log.d(TAG, "onCreate: done");
 
     }

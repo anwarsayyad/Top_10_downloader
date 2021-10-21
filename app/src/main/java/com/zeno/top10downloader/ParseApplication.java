@@ -80,10 +80,8 @@ public class ParseApplication {
 
 
             }
-            for (Feedentry app: applications){
-                Log.d(TAG, "parse: ******************************");
-                Log.d(TAG,app.toString());
-            }
+
+
         } catch (Exception e) {
             status = false;
             e.printStackTrace();

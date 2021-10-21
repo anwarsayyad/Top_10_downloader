@@ -3,9 +3,12 @@ package com.zeno.top10downloader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
@@ -26,11 +29,41 @@ public class MainActivity extends AppCompatActivity {
         listApps = (ListView) findViewById(R.id.XmlList);
 
 
-        Log.d(TAG, "onCreate: starting Asynctask ");
-        DownloadData downloadData = new DownloadData();  // creating object of Downloaddata class 
-        downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=100/xml"); //using inbuilt command exucate to from AyncTask class
+        DownloadUrl("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=100/xml"); //using inbuilt command exucate to from AyncTask class
         Log.d(TAG, "onCreate: done");
 
+    }
+//   Cntrol + 0 to get these both methods shortcut thanks me later haha
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+       getMenuInflater().inflate(R.menu.feed_menu,menu);
+       return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        String feedUrl;
+        switch (id) {
+            case R.id.Songs:
+                feedUrl = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=100/xml";
+                break;
+            case R.id.Apps:
+                feedUrl = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=25/xml";
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+        DownloadUrl(feedUrl);
+        return true;
+
+    }
+    private void DownloadUrl(String feedUrl){
+        Log.d(TAG, "DownloadURL: starting Asynctask ");
+        DownloadData downloadData = new DownloadData();  // creating object of Downloaddata class
+        downloadData.execute(feedUrl); //using inbuilt command exucate to from AyncTask class
+        Log.d(TAG, "DownloadURl: done");
     }
 
     private class DownloadData extends AsyncTask<String, Void, String> {
@@ -83,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 URL url = new URL(urlPath); // creates an  instarce of a URL  from the String representation
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();//Uded to interact with web server inmportant in andriod developmnet
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();//Uded to interact with web server unimportant in andriod developmnet
                 int response = connection.getResponseCode();
                 Log.d(TAG, "downloadXML: The response code was " + response);
 //                InputStream inputStream = connection.getInputStream();//This abstract class is the superclass of all classes representing an input stream of bytes.
